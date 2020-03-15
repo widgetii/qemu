@@ -255,6 +255,17 @@ config VERSATILE
     select REALVIEW
     select USB_OHCI
 
+config HISILICON
+    bool
+    select ARM_TIMER # sp804
+    select PFLASH_CFI01
+    select LSI_SCSI_PCI
+    select PL050  # keyboard/mouse
+    select PL080  # DMA controller
+    select PL190  # Vector PIC
+    select REALVIEW
+    select USB_OHCI
+
 config VEXPRESS
     bool
     select A9MPCORE
