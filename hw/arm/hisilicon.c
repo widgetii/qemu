@@ -281,10 +281,9 @@ static void versatile_init(MachineState *machine, int board_id)
         n--;
     }
 
-    pl011_create(0x101f1000, pic[12], serial_hd(0));
-    pl011_create(0x101f2000, pic[13], serial_hd(1));
-    pl011_create(0x101f3000, pic[14], serial_hd(2));
-    pl011_create(0x10009000, sic[6], serial_hd(3));
+    pl011_create(0x12100000, pic[12], serial_hd(0));
+    pl011_create(0x12101000, pic[13], serial_hd(1));
+    pl011_create(0x12102000, pic[14], serial_hd(2));
 
     dev = qdev_create(NULL, "pl080");
     object_property_set_link(OBJECT(dev), OBJECT(sysmem), "downstream",
@@ -335,7 +334,6 @@ static void versatile_init(MachineState *machine, int board_id)
     /*  0x10006000 KMI0 (keyboard).  */
     /*  0x10007000 KMI1 (mouse).  */
     /* 0x10008000 Character LCD Interface.  */
-    /*  0x10009000 UART3.  */
     /* 0x1000a000 Smart card 1.  */
     /*  0x1000b000 MMCI1.  */
     /*  0x10010000 Ethernet.  */
@@ -356,9 +354,12 @@ static void versatile_init(MachineState *machine, int board_id)
     /* 0x101e7000 GPIO port 3.  */
     /* 0x101e8000 RTC.  */
     /* 0x101f0000 Smart card 0.  */
-    /*  0x101f1000 UART0.  */
-    /*  0x101f2000 UART1.  */
-    /*  0x101f3000 UART2.  */
+    // 12100000-12100fff : /soc/uart@12100000
+    //   12100000-12100fff : uart-pl011
+    // 12101000-12101fff : /soc/uart@12101000
+    //   12101000-12101fff : uart-pl011
+    // 12102000-12102fff : /soc/uart@12102000
+    //   12102000-12102fff : uart-pl011
     /* 0x101f4000 SSPI.  */
     /* 0x34000000 NOR Flash */
 
