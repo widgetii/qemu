@@ -31,7 +31,7 @@
 
 /* Primary interrupt controller.  */
 
-#define TYPE_VERSATILE_PB_SIC "versatilepb_sic"
+#define TYPE_VERSATILE_PB_SIC "hi3516ev100_sic"
 #define VERSATILE_PB_SIC(obj) \
     OBJECT_CHECK(vpb_sic_state, (obj), TYPE_VERSATILE_PB_SIC)
 
@@ -47,7 +47,7 @@ typedef struct vpb_sic_state {
 } vpb_sic_state;
 
 static const VMStateDescription vmstate_vpb_sic = {
-    .name = "versatilepb_sic",
+    .name = "hi3516ev100_sic",
     .version_id = 1,
     .minimum_version_id = 1,
     .fields = (VMStateField[]) {
@@ -201,7 +201,7 @@ static void versatile_init(MachineState *machine, int board_id)
          * and memory cannot overlap with devices.
          * Refuse to run rather than behaving very confusingly.
          */
-        error_report("versatilepb: memory size must not exceed 256MB");
+        error_report("hi3516ev100: memory size must not exceed 256MB");
         exit(1);
     }
 
@@ -386,11 +386,11 @@ static void vab_init(MachineState *machine)
     versatile_init(machine, 0x25e);
 }
 
-static void versatilepb_class_init(ObjectClass *oc, void *data)
+static void hi3516ev100_class_init(ObjectClass *oc, void *data)
 {
     MachineClass *mc = MACHINE_CLASS(oc);
 
-    mc->desc = "ARM Versatile/PB (ARM926EJ-S)";
+    mc->desc = "ARM HiSilicon 3516EV100 SoC (ARM926EJ-S)";
     mc->init = vpb_init;
     mc->block_default_type = IF_SCSI;
     mc->ignore_memory_transaction_failures = true;
@@ -398,17 +398,17 @@ static void versatilepb_class_init(ObjectClass *oc, void *data)
     mc->default_ram_id = "versatile.ram";
 }
 
-static const TypeInfo versatilepb_type = {
-    .name = MACHINE_TYPE_NAME("versatilepb"),
+static const TypeInfo hi3516ev100_type = {
+    .name = MACHINE_TYPE_NAME("hi3516ev100"),
     .parent = TYPE_MACHINE,
-    .class_init = versatilepb_class_init,
+    .class_init = hi3516ev100_class_init,
 };
 
-static void versatileab_class_init(ObjectClass *oc, void *data)
+static void hi3516cv300_class_init(ObjectClass *oc, void *data)
 {
     MachineClass *mc = MACHINE_CLASS(oc);
 
-    mc->desc = "ARM Versatile/AB (ARM926EJ-S)";
+    mc->desc = "ARM HiSilicon 3516CV300 SoC (ARM926EJ-S)";
     mc->init = vab_init;
     mc->block_default_type = IF_SCSI;
     mc->ignore_memory_transaction_failures = true;
@@ -416,16 +416,16 @@ static void versatileab_class_init(ObjectClass *oc, void *data)
     mc->default_ram_id = "versatile.ram";
 }
 
-static const TypeInfo versatileab_type = {
-    .name = MACHINE_TYPE_NAME("versatileab"),
+static const TypeInfo hi3516cv300_type = {
+    .name = MACHINE_TYPE_NAME("hi3516cv300"),
     .parent = TYPE_MACHINE,
-    .class_init = versatileab_class_init,
+    .class_init = hi3516cv300_class_init,
 };
 
 static void versatile_machine_init(void)
 {
-    type_register_static(&versatilepb_type);
-    type_register_static(&versatileab_type);
+    type_register_static(&hi3516ev100_type);
+    type_register_static(&hi3516cv300_type);
 }
 
 type_init(versatile_machine_init)
@@ -445,9 +445,9 @@ static const TypeInfo vpb_sic_info = {
     .class_init    = vpb_sic_class_init,
 };
 
-static void versatilepb_register_types(void)
+static void hi3516ev100_register_types(void)
 {
     type_register_static(&vpb_sic_info);
 }
 
-type_init(versatilepb_register_types)
+type_init(hi3516ev100_register_types)
